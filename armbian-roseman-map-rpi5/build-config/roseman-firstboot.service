@@ -1,0 +1,13 @@
+[Unit]
+Description=RoSeMAN first boot setup (load Docker images, start services)
+After=docker.service network-online.target
+Requires=docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/roseman/scripts/firstboot.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,13 @@
+[Unit]
+Description=WiFi Setup — import wpa_supplicant.conf from boot partition
+Wants=network-pre.target
+Before=network.target network-online.target
+Before=roseman-firstboot.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/roseman/scripts/wifi-setup.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
