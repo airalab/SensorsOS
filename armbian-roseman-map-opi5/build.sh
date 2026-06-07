@@ -30,13 +30,10 @@ warn()  { echo -e "${YELLOW}[WARN]${NC}  $*"; }
 error() { echo -e "${RED}[ERROR]${NC} $*" >&2; exit 1; }
 
 # ── Validate prerequisites ──────────────────────────────────────
-if [[ ! -d "${BUILD_DIR}" ]]; then
-    info "Armbian build directory not found. Cloning..."
+if [[ ! -d "${BUILD_DIR}" ]] || [[ ! -f "${BUILD_DIR}/compile.sh" ]]; then
+    info "Armbian build directory not found or empty. Cloning..."
+    rm -rf "${BUILD_DIR}"
     git clone --depth 1 https://github.com/armbian/build.git "${BUILD_DIR}"
-fi
-
-if [[ ! -f "${BUILD_DIR}/compile.sh" ]]; then
-    error "compile.sh not found in ${BUILD_DIR}"
 fi
 
 # Check overlay directory exists
